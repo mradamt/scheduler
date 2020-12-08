@@ -9,8 +9,6 @@ export default function DayListItem(props) {
     'day-list__item--full': props.spots === 0,
   })
 
-  const onClickFunc = () => props.setDay(props.name);
-
   const formatSpots = (spots) => {
     const num = spots === 0 ? 'no' : spots;
     const spotsPlural = spots === 1 ? 'spot' : 'spots';
@@ -18,7 +16,7 @@ export default function DayListItem(props) {
   }
 
   return (
-    <li className={listItemClasses} onClick={onClickFunc}>
+    <li className={listItemClasses} onClick={props.setDay}>
       <h2 className="text--regular">{ props.name }</h2>
       <h3 className="text--light">{ formatSpots(props.spots) }</h3>
     </li>
