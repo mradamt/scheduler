@@ -2,7 +2,7 @@ import React from 'react';
 import InterviewerListItem from './InterviewerListItem';
 import './InterviewerList.scss';
 
-export default function InterviewerList(props) {
+const InterviewerList = (props) => {
 
 
   const listInterviewers = props.values.map(interviewer => <InterviewerListItem 
@@ -20,3 +20,5 @@ export default function InterviewerList(props) {
     </section>
   )
 } 
+
+export default InterviewerList;
