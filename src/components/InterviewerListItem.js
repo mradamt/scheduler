@@ -8,10 +8,8 @@ export default function InterviewerListItem(props) {
     'interviewers__item--selected': props.selected,
   })
 
-  const onClickFunc = () => props.setInterviewer(props.name);
-
   return (
-    <li className={listItemClasses} onClick={onClickFunc}>
+    <li className={listItemClasses} onClick={props.setInterviewer}>
       <img
         className="interviewers__item-image"
         src={props.avatar}
