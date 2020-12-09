@@ -5,6 +5,9 @@ import Empty from './Empty'
 
 import './styles.scss';
 
+import { action } from "@storybook/addon-actions";
+
+
 const Appointment = (props) => {
   return (
     <article className="appointment">
@@ -13,7 +16,12 @@ const Appointment = (props) => {
         <Show 
           student={props.interview.student}
           interviewer={props.interview.interviewer}
-        /> : <Empty />
+          onEdit={action('onEdit')}
+          onDelete={action('onDelete')}
+        /> : 
+        <Empty
+          onAdd={action("onAdd")}
+        />
       }
     </article>
   )
