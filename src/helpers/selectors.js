@@ -8,4 +8,10 @@ const getAppointmentsForDay = (state, day) => {
   return appointmentsForDay;
 }
 
-export default getAppointmentsForDay;
+const getInterview = (state, interview) => {
+}
+
+export {
+  getAppointmentsForDay,
+  getInterview,
+};
