@@ -4,12 +4,12 @@ const useVisualMode = function (initial) {
   const [history, setHistory] = useState([initial]);
 
   const transition = function(mode, replace = false) {
-    const historyGrow = [...history]
+    const newHistory = [...history]
     if (replace) {
-      historyGrow.shift()
+      newHistory.shift()
     };
-    historyGrow.unshift(mode)
-    setHistory([...historyGrow]);
+    newHistory.unshift(mode)
+    setHistory([...newHistory]);
   }
 
   const back = function() {
@@ -17,9 +17,9 @@ const useVisualMode = function (initial) {
       return;
     }
 
-    const historyShrink = [...history]
-    historyShrink.shift()
-    setHistory([...historyShrink]);
+    const newHistory = [...history]
+    newHistory.shift()
+    setHistory([...newHistory]);
   }
 
   const mode = history[0]
