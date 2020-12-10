@@ -80,10 +80,10 @@ storiesOf("DayList", module)
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }],
   })
   .add("Monday", () => (
-    <DayList values={days} value={"Monday"} onChange={action("setDay")} />
+    <DayList days={days} selectedDay={"Monday"} onChange={action("setDay")} />
   ))
   .add("Tuesday", () => (
-    <DayList values={days} value={"Tuesday"} onChange={action("setDay")} />
+    <DayList days={days} selectedDay={"Tuesday"} onChange={action("setDay")} />
   ));
 
 
