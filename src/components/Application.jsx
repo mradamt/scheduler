@@ -55,6 +55,25 @@ const Application = (props) => {
       })
   }
 
+  const cancelInterview = (id) => {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    }
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+    return axios.delete(`/api/appointments/${id}`)
+      .then(res => {
+        console.log(res)
+        setState({
+          ...state,
+          appointments
+          })
+      })
+  }
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -86,6 +105,7 @@ const Application = (props) => {
             interview={interview}
             interviewers={dailyInterviewers}
             bookInterview={bookInterview}
+            cancelInterview={cancelInterview}
           />
         )})}
         {<Appointment key='last' time='5pm' />}
