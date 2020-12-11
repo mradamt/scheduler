@@ -13,6 +13,7 @@ import './styles.scss';
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const EDIT = "EDIT";
 const SAVING = "SAVING";
 const ERROR = 'ERROR';
 const DELETING = 'DELETING';
@@ -56,7 +57,7 @@ const Appointment = (props) => {
       {mode === SHOW && <Show 
         student={props.interview.student}
         interviewer={props.interview.interviewer}
-        onEdit={() => console.log('onEdit')}
+        onEdit={() => transition(EDIT)}
         onDelete={() => transition(CONFIRM)}
       />}
       {mode === EMPTY && <Empty
@@ -64,6 +65,13 @@ const Appointment = (props) => {
       />}
       {mode === CREATE && <Form
         interviewers={props.interviewers}
+        onSave={save}
+        onCancel={back}
+      />}
+      {mode === EDIT && <Form
+        interviewers={props.interviewers}
+        name={props.interview.student}
+        interviewer={props.interview.interviewer.id}
         onSave={save}
         onCancel={back}
       />}
