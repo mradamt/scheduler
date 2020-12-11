@@ -8,9 +8,6 @@ import useVisualMode from 'hooks/useVisualMode';
 
 import './styles.scss';
 
-import { action } from "@storybook/addon-actions";
-
-
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
@@ -33,8 +30,8 @@ const Appointment = (props) => {
       {mode === SHOW && <Show 
         student={props.interview.student}
         interviewer={props.interview.interviewer}
-        onEdit={action('onEdit')}
-        onDelete={action('onDelete')}
+        onEdit={() => console.log('onEdit')}
+        onDelete={() => console.log('onDelete')}
       />}
       {mode === EMPTY && <Empty
         onAdd={() => transition(CREATE)}
