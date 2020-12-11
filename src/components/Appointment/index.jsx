@@ -32,7 +32,7 @@ const Appointment = (props) => {
         onAdd={() => transition(CREATE)}
       />}
       {mode === CREATE && <Form
-        interviewers={[]}
+        interviewers={props.interviewers}
         onSave={action('onSave')}
         onCancel={() => back()}
       />}
