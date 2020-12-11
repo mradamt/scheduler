@@ -37,7 +37,22 @@ const Application = (props) => {
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
   const bookInterview = (id, interview) => {
-    console.log(id, interview);
+    const appointment = {
+      ...state.appointments[id],
+      interview: {...interview}
+    }
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    }
+    return axios.put(`/api/appointments/${id}`, {interview})
+      .then(res => {
+        console.log('res', res);
+        setState({
+          ...state,
+          appointments
+        })
+      })
   }
 
   return (
