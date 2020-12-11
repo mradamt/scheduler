@@ -1,78 +1,23 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios'
+import React from "react";
 
+import useApplicationData from 'hooks/useApplicationData';
+import { getAppointmentsForDay, getInterview, getInterviewersForDay } from '../helpers/selectors';
 import DayList from "./DayList";
 import Appointment from './Appointment';
-import { getAppointmentsForDay, getInterview, getInterviewersForDay } from '../helpers/selectors';
 
 import "components/Application.scss";
 
 
 const Application = (props) => {
-  const [state, setState] = useState({
-    day: "Monday", 
-    days: [],
-    appointments: {},
-    interviewers: {}
-  })
-  const setDay = day => setState({...state, day});
+  const {
+    state,
+    setDay,
+    bookInterview,
+    cancelInterview
+  } = useApplicationData()
+  
+  const interviewers = getInterviewersForDay(state, state.day);
 
-  useEffect(() => {
-    Promise.all([
-      axios.get('/api/days'),
-      axios.get('/api/appointments'),
-      axios.get('/api/interviewers')
-    ])
-    .then(([apiDays, apiAppointments, apiInterviewers]) => {
-      setState(prev => ({
-        ...prev,
-        days: apiDays.data,
-        appointments: apiAppointments.data,
-        interviewers: apiInterviewers.data
-      }));
-    })
-  }, [])
-
-  const dailyAppointments = getAppointmentsForDay(state, state.day);
-  const dailyInterviewers = getInterviewersForDay(state, state.day);
-
-  const bookInterview = (id, interview) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: {...interview}
-    }
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    }
-    return axios.put(`/api/appointments/${id}`, {interview})
-      .then(res => {
-        console.log('res', res);
-        setState({
-          ...state,
-          appointments
-        })
-      })
-  }
-
-  const cancelInterview = (id) => {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    }
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    }
-    return axios.delete(`/api/appointments/${id}`)
-      .then(res => {
-        console.log(res)
-        setState({
-          ...state,
-          appointments
-          })
-      })
-  }
 
   return (
     <main className="layout">
