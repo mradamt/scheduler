@@ -36,6 +36,10 @@ const Application = (props) => {
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
+  const bookInterview = (id, interview) => {
+    console.log(id, interview);
+  }
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -66,6 +70,7 @@ const Application = (props) => {
             {...appointment}
             interview={interview}
             interviewers={dailyInterviewers}
+            bookInterview={bookInterview}
           />
         )})}
         {<Appointment key='last' time='5pm' />}

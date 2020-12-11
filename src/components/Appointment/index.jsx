@@ -3,7 +3,7 @@ import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
 import Form from './Form';
-import Status from './Status';
+// import Status from './Status';
 import useVisualMode from 'hooks/useVisualMode';
 
 import './styles.scss';
@@ -17,6 +17,14 @@ const CREATE = "CREATE";
 
 const Appointment = (props) => {
   const {mode, transition, back} = useVisualMode(props.interview ? SHOW : EMPTY)
+
+  const save = function (name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer
+    }
+    props.bookInterview(interview);
+  }
 
   return (
     <article className="appointment">
@@ -33,7 +41,7 @@ const Appointment = (props) => {
       />}
       {mode === CREATE && <Form
         interviewers={props.interviewers}
-        onSave={action('onSave')}
+        onSave={save}
         onCancel={back}
       />}
 
