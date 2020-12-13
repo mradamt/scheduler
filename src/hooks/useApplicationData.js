@@ -31,18 +31,27 @@ const useApplicationData = () => {
       case SET_INTERVIEW: {
         const appointment = {
           ...state.appointments[action.id],
-          interview: {...action.interview}
+          interview: action.interview
         }
         const appointments = {
           ...state.appointments,
           [action.id]: appointment
         }
+        const days = state.days.map(dayObj => {
+          if (dayObj.appointments.includes(action.id)) {
+            const freeSpotsArr = dayObj.appointments.filter(id => !appointments[id].interview);
+            dayObj.spots = freeSpotsArr.length
+            return dayObj
+          }
+          return dayObj
+        })
         return {
           ...state,
-          appointments
+          appointments,
+          days
         }
       }
-      
+
       default:
         throw new Error(
           `Tried to reduce with unsupported action type: ${action.type}`
@@ -88,27 +97,6 @@ const useApplicationData = () => {
       .then(res => {
         dispatch({type: SET_INTERVIEW, id, interview: null})
       })
-  }
-
-  const updateSpots = (appointmentId, appointments) => {
-    let daysArrIndex;
-    let spots;
-    for (const dayObj of state.days) {
-      if (dayObj.appointments.includes(appointmentId)) {
-        daysArrIndex = dayObj.id - 1;
-        spots = dayObj.appointments.filter(id => !appointments[id].interview).length;
-        break;
-      }
-    }
-    const dayObj = {
-      ...state.days[daysArrIndex],
-      spots: spots
-    };
-    const daysObj = {
-      ...state.days,
-      [daysArrIndex]: dayObj
-    }
-    return Object.values(daysObj)
   }
 
   return ({
