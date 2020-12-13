@@ -8,6 +8,9 @@ const useApplicationData = () => {
   const SET_APPLICATION_DATA = 'SET_APPLICATION_DATA';
   const SET_INTERVIEW = 'SET_INTERVIEW';
 
+  /*
+   * Reducer function
+   */
   const reducer = (state, action) => {
     switch (action.type) {
 
@@ -74,10 +77,8 @@ const useApplicationData = () => {
 
 
   const bookInterview = (id, interview) => {
-    // const days = updateSpots(id, appointments)
     return axios.put(`/api/appointments/${id}`, {interview})
       .then(res => {
-        console.log('res', res);
         dispatch({type: SET_INTERVIEW, id, interview})
       })
   }
@@ -85,7 +86,6 @@ const useApplicationData = () => {
   const cancelInterview = (id) => {
     return axios.delete(`/api/appointments/${id}`)
       .then(res => {
-        console.log(res)
         dispatch({type: SET_INTERVIEW, id, interview: null})
       })
   }
