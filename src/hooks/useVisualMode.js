@@ -14,14 +14,14 @@ const useVisualMode = function (initial) {
 
   const back = function() {
     setHistory(prev => {
-      if (prev.length <= 1) return;
+      if (prev.length <= 1) return prev;
       const newHistory = [...prev]
       newHistory.shift()
       return [...newHistory];
     })
   }
 
-  const mode = history[0]
+  const mode = history[0];
   return {mode, transition, back};
 }
 
