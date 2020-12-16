@@ -119,6 +119,12 @@ describe('Application', () => {
     const appointment = getAllByTestId(container, 'appointment').find(
       appointment => queryByAltText(appointment, /add/i)
     );
+    // Test Add-Cancel
+    // Click the "Add" button on the first empty appointment.
+    fireEvent.click(getByAltText(appointment, /add/i));
+    // Click "Cancel" and check if 'Add' button reappears
+    fireEvent.click(getByText(appointment, "Cancel"));
+    expect(getByAltText(appointment, /add/i)).toBeInTheDocument();
     // Click the "Add" button on the first empty appointment.
     fireEvent.click(getByAltText(appointment, /add/i));
     // Enter a student name and select an interviewer
@@ -148,6 +154,14 @@ describe('Application', () => {
     const appointment = getAllByTestId(container, 'appointment').find(
       appointment => queryByText(appointment, 'Archie Cohen')
     );
+    // Test Delete-Cancel
+    // Click the "Delete" button on the 2nd (booked) appointment.
+    fireEvent.click(getByAltText(appointment, /delete/i));
+    // Click the "Cancel" button to back out of delete.
+    fireEvent.click(getByText(appointment, /cancel/i));
+    // Check that 'Archie Cohen' is displayed again
+    expect(getByText(appointment, 'Archie Cohen')).toBeInTheDocument();
+    // Test Delete-Confirm
     // Click the "Delete" button on the 2nd (booked) appointment.
     fireEvent.click(getByAltText(appointment, /delete/i));
     // Click the "Confirm" button on the delete confirmation component.
