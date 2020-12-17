@@ -1,11 +1,12 @@
 # Interview Scheduler
 
-A scheduler app built using React for booking appointments between students and interviewers.
+A simple, clean scheduler app built with React that books appointments between students and interviewers.
 
-Standard view of the day's appointments
+### Standard view of the day's appointments
 !["View the day's appointments"](https://github.com/mradamt/scheduler/blob/master/docs/Show-appointment.png)
 
-Appointment editor form
+
+### Add (or edit) an appointment
 !["Edit an appointment"](https://github.com/mradamt/scheduler/blob/master/docs/Edit-appointment.png)
 
 
