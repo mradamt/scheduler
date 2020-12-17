@@ -18,7 +18,7 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
-      
+
 deploy:
   machine:
     enabled: true
@@ -28,7 +28,7 @@ deploy:
   steps:
     - add_ssh_keys:
         fingerprints:
-          - "09:21:47:dd:bd:c5:61:59:36:8b:3b:34:c8:0e:36:95"
+          - "58:90:61:e3:24:26:3e:da:1c:c6:34:2e:dd:14:5d:90"
     - checkout
     - run:
         name: Push Master to Production
