@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from "react";
 import Header from './Header';
 import Show from './Show';
 import Empty from './Empty';
@@ -26,6 +26,18 @@ const Appointment = (props) => {
 
   // Destructure useVisualMode return object
   const {mode, transition, back} = useVisualMode(interview ? SHOW : EMPTY)
+
+  // Handle stale-state websocket error
+  useEffect(() => {
+    if (mode === EMPTY && interview) {
+      transition(SHOW)
+    } 
+    if (mode === SHOW && !interview) {
+      transition(EMPTY)
+    }
+  }, [interview, mode, transition])
+
+  // Book interview initiation
   const save = function (name, interviewer) {
     if (!name || !interviewer) {
       transition(ERROR_SAVE)

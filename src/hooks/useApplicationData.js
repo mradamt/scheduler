@@ -30,6 +30,29 @@ const useApplicationData = () => {
     })
   }, [])
 
+  useEffect(() => {
+    const webSocket = new WebSocket('ws://localhost:8001');
+
+    // Confirm sucessful websocket connection
+    // webSocket.onopen = event => {
+    //   webSocket.send('ping')
+    // }
+
+    // Update interviews in local state if server updates
+    webSocket.onmessage = event => {
+      const {type, id, interview} = JSON.parse(event.data)
+
+      if (type === "SET_INTERVIEW") {
+        dispatch({
+          type,
+          id,
+          interview
+        })
+      }
+    }
+
+    return () => webSocket.close();
+  }, [])
 
   const bookInterview = (id, interview) => {
     return axios.put(`/api/appointments/${id}`, {interview})
