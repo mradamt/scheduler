@@ -21,8 +21,11 @@ const DELETING = 'DELETING';
 const CONFIRM = 'CONFIRM';
 
 const Appointment = (props) => {
-  const {mode, transition, back} = useVisualMode(props.interview ? SHOW : EMPTY)
+  // Destructure props
+  const {id, time, interview, interviewers, bookInterview, cancelInterview } = props;
 
+  // Destructure useVisualMode return object
+  const {mode, transition, back} = useVisualMode(interview ? SHOW : EMPTY)
   const save = function (name, interviewer) {
     if (!name || !interviewer) {
       transition(ERROR_SAVE)
@@ -30,25 +33,26 @@ const Appointment = (props) => {
     }
     const interview = {student: name, interviewer}
     transition(SAVING)
-    props.bookInterview(props.id, interview)
+    bookInterview(id, interview)
       .then(res => transition(SHOW))
       .catch(err => transition(ERROR_SAVE, true))
   };
 
+  // Delete interview initiation
   const deleteInterview = function () {
     transition(DELETING, true)
-    props.cancelInterview(props.id)
+    cancelInterview(id)
       .then(res => transition(EMPTY))
       .catch(err => transition(ERROR_DELETE, true))
   };
-
+  
   return (
     <article className="appointment" data-testid='appointment'>
-      <Header time={props.time} />
+      <Header time={time} />
       
-      {mode === SHOW && <Show 
-        student={props.interview.student}
-        interviewer={props.interview.interviewer}
+      {mode === SHOW && interview && <Show 
+        student={interview.student}
+        interviewer={interview.interviewer}
         onEdit={() => transition(EDIT)}
         onDelete={() => transition(CONFIRM)}
       />}
@@ -56,14 +60,14 @@ const Appointment = (props) => {
         onAdd={() => transition(CREATE)}
       />}
       {mode === CREATE && <Form
-        interviewers={props.interviewers}
+        interviewers={interviewers}
         onSave={save}
         onCancel={back}
       />}
       {mode === EDIT && <Form
-        interviewers={props.interviewers}
-        name={props.interview.student}
-        interviewer={props.interview.interviewer.id}
+        interviewers={interviewers}
+        name={interview.student}
+        interviewer={interview.interviewer.id}
         onSave={save}
         onCancel={back}
       />}
